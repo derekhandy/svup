@@ -41,7 +41,7 @@ func main() {
 
 	if len(os.Args) <= 1 {
 		fmt.Println("No photo path provided.")
-		fmt.Println("Usage: svup path/to/photo.jpg")
+		fmt.Println("Usage: svup path/to/photo.jpg [-v]")
 		return
 	}
 

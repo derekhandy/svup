@@ -6,7 +6,7 @@ It is a small command-line program written in Go. Give it a file path, and it wi
 
 - check that your Pinata API keys work
 - upload the file to Pinata
-- print the IPFS url for the uploaded file (-v : print all metadata)
+- print the IPFS url for the uploaded file
 
 ## Requirements
 
@@ -64,6 +64,12 @@ svup path/to/file.jpg
 ```
 
 The output looks like this:
+
+```text
+https://gateway.pinata.cloud/ipfs/Qm...
+```
+
+Use -v flag to print all metadata from request:
 
 ```text
 Testing connection to Pinata...
