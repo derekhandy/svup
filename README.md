@@ -1,4 +1,4 @@
-# IPFS Photo Uploader
+# svup
 
 A simple command-line tool for uploading photos and files to IPFS (InterPlanetary File System) using the Pinata API. This tool provides an easy way to pin files to IPFS and get permanent, decentralized URLs for your content.
 
@@ -34,12 +34,12 @@ IPFS Photo Uploader is a lightweight Go application that interfaces with Pinata'
 2. Build the executable:
    ```bash
    cd src
-   go build -o ipfs.exe
+   go build -o svup.exe
    ```
 
 ### Option 2: Use Pre-built Binary
 
-Download the pre-built `ipfs.exe` from the releases page (if available).
+Download the pre-built `svup.exe` from the releases page (if available).
 
 ## Setup
 
@@ -82,7 +82,7 @@ export PINATA_API_SECRET=your_secret_api_key_here
 Upload a single file to IPFS:
 
 ```bash
-ipfs.exe path/to/photo.jpg
+svup.exe path/to/photo.jpg
 ```
 ### Output
 
@@ -100,9 +100,9 @@ The tool will display:
 **Example Output:**
 ```
 Testing connection to Pinata...
-✅ Successfully connected to Pinata IPFS API
+Successfully connected to Pinata IPFS API
 
-📸 Uploading photo: path/to/photo.png
+Uploading photo: path/to/photo.png
 
 Upload Result:
   Success: true
@@ -132,8 +132,8 @@ ipfs/
 ├── src/
 │   ├── unified_main.go        # Main entry point and CLI interface
 │   ├── pinata_uploader.go     # Pinata API integration and upload logic
-│   └── ipfs.exe              # Precompiled executable
-├── go.mod                     # Go module definition
+│   ├── svup.exe               # Precompiled executable
+│   └── go.mod                 # Go module definition
 └── README.md                  # This file
 ```
 
@@ -205,36 +205,6 @@ options := map[string]interface{}{
 }
 ```
 
-## Use Cases
-
-### Photo Storage
-
-Upload photos to IPFS for permanent, decentralized storage:
-```bash
-ipfs.exe photo.jpg
-```
-
-### Document Archiving
-
-Store important documents on IPFS:
-```bash
-ipfs.exe document.pdf
-```
-
-### NFT Metadata
-
-Upload NFT metadata files to IPFS:
-```bash
-ipfs.exe metadata.json
-```
-
-### Content Distribution
-
-Upload content for decentralized distribution:
-```bash
-ipfs.exe video.mp4
-```
-
 ## Integration Examples
 
 ### Go Program
@@ -269,7 +239,7 @@ func main() {
 #!/bin/bash
 for file in images/*.jpg; do
     echo "Uploading $file..."
-    ipfs.exe "$file"
+    svup.exe "$file"
     echo ""
 done
 ```
@@ -278,7 +248,7 @@ done
 
 ### API Credentials Not Found
 
-**Error:** `🔑 Pinata API credentials not found!`
+**Error:** `Pinata API credentials not found!`
 
 **Solution:**
 - Ensure `PINATA_API_KEY` and `PINATA_API_SECRET` are set
