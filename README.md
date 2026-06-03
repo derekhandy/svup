@@ -51,14 +51,6 @@ Do not commit these keys to the repository.
 
 ## Use
 
-Run `svup` with the file you want to upload:
-
-```bash
-./svup path/to/file.jpg
-```
-
-If `svup` is already on your `PATH`, you can run:
-
 ```bash
 svup path/to/file.jpg
 ```
