@@ -25,15 +25,23 @@ func printResult(result *UploadResult) {
 }
 
 func main() {
-	if len(os.Args) > 1 && os.Args[2] != "-v" {
-		fmt.Println("Invalid arguments.")
-		fmt.Println("Usage: svup.exe path/to/photo.jpg")
-		fmt.Println("	-v : Prints request metadata.")
-		return
+	flags := Flags{
+		verbose: false,
 	}
+
+	if len(os.Args) > 2 {
+		if os.Args[2] != "-v" {
+			fmt.Println("Invalid arguments.")
+			fmt.Println("Usage: svup path/to/photo.jpg")
+			fmt.Println("	-v : Prints request metadata.")
+			return
+		}
+		flags.verbose = true
+	}
+
 	if len(os.Args) <= 1 {
 		fmt.Println("No photo path provided.")
-		fmt.Println("Usage: svup.exe path/to/photo.jpg")
+		fmt.Println("Usage: svup path/to/photo.jpg")
 		return
 	}
 
@@ -45,19 +53,17 @@ func main() {
 		fmt.Println("Please set your Pinata API credentials")
 		fmt.Println("Or get them from: https://app.pinata.cloud/keys")
 		fmt.Println()
-		fmt.Println("Usage: svup.exe path/to/photo.jpg")
+		fmt.Println("Usage: svup path/to/photo.jpg")
 		return
 	}
 
 	uploader := NewPinataUploader(apiKey, apiSecret)
 
-	fmt.Println("Testing connection to Pinata...")
 	if err := uploader.TestConnection(); err != nil {
 		log.Fatalf("Failed to connect to Pinata: %v", err)
 	}
 
 	photoPath := os.Args[1]
-	fmt.Printf("\nUploading photo: %s\n", photoPath)
 
 	result, err := uploader.UploadPhoto(photoPath, "")
 	if err != nil {
@@ -65,5 +71,9 @@ func main() {
 		return
 	}
 
-	printResult(result)
+	if flags.verbose {
+		printResult(result)
+	} else {
+		fmt.Println(result.URL)
+	}
 }

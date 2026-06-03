@@ -183,6 +183,5 @@ func (p *PinataUploader) TestConnection() error {
 		return fmt.Errorf("Pinata API authentication failed (%d): %s", resp.StatusCode, string(body))
 	}
 
-	fmt.Println("Successfully connected to Pinata IPFS API")
 	return nil
 }
