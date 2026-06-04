@@ -4,24 +4,12 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	svup "github.com/derekhandy/svuplib"
 )
 
 type Flags struct {
 	verbose bool
-}
-
-func printResult(result *UploadResult) {
-	fmt.Printf("Upload Result:\n")
-	fmt.Printf("  Success: %t\n", result.Success)
-	if result.Success {
-		fmt.Printf("  Hash: %s\n", result.Hash)
-		fmt.Printf("  URL: %s\n", result.URL)
-		fmt.Printf("  Filename: %s\n", result.Filename)
-		fmt.Printf("  Size: %d bytes\n", result.Size)
-		fmt.Printf("  Timestamp: %s\n", result.Timestamp.Format("2006-01-02 15:04:05"))
-	} else {
-		fmt.Printf("  Error: %s\n", result.Error)
-	}
 }
 
 func main() {
@@ -57,7 +45,7 @@ func main() {
 		return
 	}
 
-	uploader := NewPinataUploader(apiKey, apiSecret)
+	uploader := svup.NewPinataUploader(apiKey, apiSecret)
 
 	if err := uploader.TestConnection(); err != nil {
 		log.Fatalf("Failed to connect to Pinata: %v", err)
@@ -72,7 +60,17 @@ func main() {
 	}
 
 	if flags.verbose {
-		printResult(result)
+		fmt.Printf("Upload Result:\n")
+		fmt.Printf("  Success: %t\n", result.Success)
+		if result.Success {
+			fmt.Printf("  Hash: %s\n", result.Hash)
+			fmt.Printf("  URL: %s\n", result.URL)
+			fmt.Printf("  Filename: %s\n", result.Filename)
+			fmt.Printf("  Size: %d bytes\n", result.Size)
+			fmt.Printf("  Timestamp: %s\n", result.Timestamp.Format("2006-01-02 15:04:05"))
+		} else {
+			fmt.Printf("  Error: %s\n", result.Error)
+		}
 	} else {
 		fmt.Println(result.URL)
 	}

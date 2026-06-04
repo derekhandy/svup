@@ -25,11 +25,11 @@ https://app.pinata.cloud/keys
 From the repository root:
 
 ```bash
-cd src
+cd svup
 go build -o svup
 ```
 
-This creates a `svup` binary in the `src` directory.
+This creates a `svup` binary in the main directory.
 
 ## Set up your Pinata keys
 
