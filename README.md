@@ -55,12 +55,6 @@ Do not commit these keys to the repository.
 svup path/to/file.jpg
 ```
 
-The output looks like this:
-
-```text
-https://gateway.pinata.cloud/ipfs/Qm...
-```
-
 Use -v flag to print all metadata from request:
 
 ```text
