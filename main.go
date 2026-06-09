@@ -1,3 +1,10 @@
+//
+//												svup @ v1.1.2
+//
+//									MIT License, Copyright (c) 2026 Derek Handy
+//							Project can be found at: https://github.com/derekhandy/svup
+//
+
 package main
 
 import (
@@ -12,24 +19,39 @@ type Flags struct {
 	verbose bool
 }
 
-func main() {
-	flags := Flags{
-		verbose: false,
-	}
+func parseArgs(args []string) (string, Flags, error) {
+	flags := Flags{}
+	var filePath string
 
-	if len(os.Args) > 2 {
-		if os.Args[2] != "-v" {
-			fmt.Println("Invalid arguments.")
-			fmt.Println("Usage: svup path/to/photo.jpg")
-			fmt.Println("	-v : Prints request metadata.")
-			return
+	for _, arg := range args {
+		switch arg {
+		case "-v", "--verbose":
+			flags.verbose = true
+		default:
+			if filePath != "" {
+				return "", flags, fmt.Errorf("invalid arguments")
+			}
+			filePath = arg
 		}
-		flags.verbose = true
 	}
 
-	if len(os.Args) <= 1 {
-		fmt.Println("No photo path provided.")
-		fmt.Println("Usage: svup path/to/photo.jpg [-v]")
+	if filePath == "" {
+		return "", flags, fmt.Errorf("no file path provided")
+	}
+
+	return filePath, flags, nil
+}
+
+func printUsage() {
+	fmt.Println("Usage: svup [-v] path/to/file")
+	fmt.Println("  -v, --verbose : Prints request metadata.")
+}
+
+func main() {
+	filePath, flags, err := parseArgs(os.Args[1:])
+	if err != nil {
+		fmt.Println(err)
+		printUsage()
 		return
 	}
 
@@ -37,11 +59,7 @@ func main() {
 	apiSecret := os.Getenv("PINATA_API_SECRET")
 
 	if apiKey == "" || apiSecret == "" {
-		fmt.Println("Pinata API credentials not found!")
-		fmt.Println("Please set your Pinata API credentials")
-		fmt.Println("Or get them from: https://app.pinata.cloud/keys")
-		fmt.Println()
-		fmt.Println("Usage: svup path/to/photo.jpg")
+		fmt.Println("Pinata API credentials not found")
 		return
 	}
 
@@ -51,11 +69,9 @@ func main() {
 		log.Fatalf("Failed to connect to Pinata: %v", err)
 	}
 
-	photoPath := os.Args[1]
-
-	result, err := uploader.UploadPhoto(photoPath, "")
+	result, err := uploader.UploadFile(filePath, "")
 	if err != nil {
-		log.Printf("Error uploading photo: %v", err)
+		log.Printf("Error uploading file: %v", err)
 		return
 	}
 

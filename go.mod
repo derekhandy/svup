@@ -1,4 +1,4 @@
-module svup
+module github.com/derekhandy/svup
 
 go 1.26.3
 
