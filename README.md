@@ -1,7 +1,7 @@
 # svup
 
 
-<b> svup </b> is a cross-platform CLI tool for uploading a file to IPFS through Pinata and returning the CID gateway URL. Available for Linux, Windows and MacOS architectures.
+<b> svup </b> is a CLI tool for uploading a file to IPFS through Pinata and returning the CID gateway URL. Cross-platform support.
 
 Requires <b> Go 1.26 </b> or newer and a <b> Pinata </b> account.
 
